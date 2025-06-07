@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интерактивные аниме-девочки</title>
+    <style>
+        :root {
+            --bg-color: #ffebf3;
+            --text-color: #d23369;
+        }
+        .dark-mode {
+            --bg-color: #1a1a2e;
+            --text-color: #f8bbd0;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            text-align: center;
+            transition: all 0.3s;
+        }
+        h1 {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        #anime-girl {
+            width: 300px;
+            cursor: pointer;
+            filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.5));
+            transition: transform 0.2s;
+        }
+        #anime-girl:hover {
+            transform: scale(1.05);
+        }
+        #anime-girl:active {
+            transform: scale(0.95);
+        }
+        .eye {
+            animation: blink 4s infinite;
+        }
+        @keyframes blink {
+            0%, 45%, 55%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(0.1); }
+        }
+        button {
+            background: #ff66b2;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>✨ Интерактивная аниме-девочка ✨</h1>
+    <button onclick="toggleDarkMode()">🌙 Тёмная тема</button>
+    <button onclick="changeGirl()">🔁 Сменить девочку</button>
+    
+    <div id="girl-container">
+        <!-- SVG-анимешка (можно заменить на картинку) -->
+        <svg id="anime-girl" width="300" height="400" viewBox="0 0 300 400" onclick="react()">
+            <!-- Голова -->
+            <circle cx="150" cy="100" r="60" fill="#FFD5E5" stroke="#000" stroke-width="2"/>
+            <!-- Глаза -->
+            <circle cx="130" cy="90" r="10" fill="white" stroke="#000" stroke-width="1"/>
+            <circle cx="170" cy="90" r="10" fill="white" stroke="#000" stroke-width="1"/>
+            <circle class="eye" cx="130" cy="90" r="5" fill="black"/>
+            <circle class="eye" cx="170" cy="90" r="5" fill="black"/>
+            <!-- Рот -->
+            <path d="M140 120 Q150 130 160 120" fill="none" stroke="#000" stroke-width="2" id="mouth"/>
+            <!-- Тело -->
+            <path d="M150 160 L150 250" stroke="#000" stroke-width="2" fill="none"/>
+            <!-- Руки -->
+            <path d="M150 180 L120 200" stroke="#000" stroke-width="2" fill="none" id="left-arm"/>
+            <path d="M150 180 L180 200" stroke="#000" stroke-width="2" fill="none" id="right-arm"/>
+            <!-- Ноги -->
+            <path d="M150 250 L130 300" stroke="#000" stroke-width="2" fill="none"/>
+            <path d="M150 250 L170 300" stroke="#000" stroke-width="2" fill="none"/>
+        </svg>
+        <p id="reaction">Кликни на неё!</p>
+    </div>
+
+    <script>
+        // Тёмная тема
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+        }
+        
+        // Реакция на клик
+        function react() {
+            const reactions = ["Ай!", "Уфф...", "Не трогай!", "❤️", ">_<"];
+            const randomReaction = reactions[Math.floor(Math.random() * reactions.length)];
+            document.getElementById("reaction").textContent = randomReaction;
+            
+            // Анимация рук
+            document.getElementById("left-arm").setAttribute("d", "M150 180 L130 220");
+            document.getElementById("right-arm").setAttribute("d", "M150 180 L180 220");
+            document.getElementById("mouth").setAttribute("d", "M140 120 Q150 110 160 120");
+            
+            setTimeout(() => {
+                document.getElementById("left-arm").setAttribute("d", "M150 180 L120 200");
+                document.getElementById("right-arm").setAttribute("d", "M150 180 L180 200");
+                document.getElementById("mouth").setAttribute("d", "M140 120 Q150 130 160 120");
+            }, 500);
+        }
+        
+        // Смена девочки (можно заменить на API)
+        function changeGirl() {
+            const girls = [
+                { hair: "#FF69B4", dress: "#9370DB" },
+                { hair: "#00CED1", dress: "#FFA07A" },
+                { hair: "#FFD700", dress: "#FF6347" }
+            ];
+            const girl = girls[Math.floor(Math.random() * girls.length)];
+            document.querySelector("circle[fill='#FFD5E5']").setAttribute("fill", girl.hair);
+        }
+    </script>
+</body>
+</html>
