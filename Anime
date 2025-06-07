@@ -119,3 +119,35 @@
     </script>
 </body>
 </html>
+// Мини-игра
+let score = 0;
+function startGame() {
+    document.body.innerHTML = `
+        <h1>Поймай аниме-девочку! 🎮</h1>
+        <p>Счёт: <span id="score">0</span></p>
+        <div id="game-area" style="width:100%; height:400px; position:relative;"></div>
+        <button onclick="location.reload()">🔙 Назад</button>
+    `;
+    
+    setInterval(createGirl, 1000);
+}
+
+function createGirl() {
+    const gameArea = document.getElementById("game-area");
+    const girl = document.createElement("img");
+    girl.src = "https://i.pinimg.com/originals/3a/c6/4e/3ac64e4a6e4b6e26e5b073b4635a8a2f.jpg";
+    girl.style.width = "80px";
+    girl.style.position = "absolute";
+    girl.style.left = Math.random() * 80 + "%";
+    girl.style.top = Math.random() * 80 + "%";
+    girl.style.cursor = "pointer";
+    
+    girl.onclick = () => {
+        girl.remove();
+        document.getElementById("score").textContent = ++score;
+    };
+    
+    gameArea.appendChild(girl);
+    
+    setTimeout(() => girl.remove(), 2000);
+}
