@@ -151,3 +151,4 @@ function createGirl() {
     
     setTimeout(() => girl.remove(), 2000);
 }
+<button onclick="startGame()">🎮 Играть</button>
